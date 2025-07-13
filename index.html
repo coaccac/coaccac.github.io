@@ -1,116 +1,66 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-  <meta charset="UTF-8">
-  <title>Geonhee Lee | Portfolio</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link href="https://fonts.googleapis.com/css2?family=Pretendard&display=swap" rel="stylesheet">
-  <style>
-    body {
-      font-family: 'Pretendard', sans-serif;
-      background-color: #fefefe;
-      color: #222;
-      margin: 0;
-      padding: 40px 20px;
-      max-width: 800px;
-      margin-left: auto;
-      margin-right: auto;
-      line-height: 1.8;
-    }
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Geonhee Lee</title>
 
-    h1 {
-      font-size: 2.8rem;
-      margin-bottom: 0.2rem;
-    }
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width">
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Geonhee Lee</h1>
+        <p>Ph.D. Student @ KAIST EE</p>
+        <p class="view"><a href="https://github.com/coaccac">View My GitHub <small>@coaccac</small></a></p>
+        <ul>
+          <li><a href="mailto:your@email.com">Email</a></li>
+          <li><a href="https://scholar.google.com">Google Scholar</a></li>
+          <li><a href="https://yourblog.com">Blog</a></li>
+        </ul>
+      </header>
 
-    h2 {
-      margin-top: 2.5rem;
-      font-size: 1.5rem;
-      border-left: 4px solid #444;
-      padding-left: 10px;
-      color: #444;
-    }
+      <section>
 
-    p, li {
-      font-size: 1.05rem;
-    }
+        <h2>🎓 Education</h2>
+        <ul>
+          <li>Ph.D. in Electrical Engineering, KAIST (2023–Present)</li>
+          <li>B.S. in Electrical Engineering, KAIST (2018–2022)</li>
+        </ul>
 
-    ul {
-      padding-left: 20px;
-    }
+        <h2>📚 Publications</h2>
+        <ul>
+          <li>Lee, G. et al. "LoRa-Backscatter Modulation for ISAC Applications." <i>IEEE ICC</i>, 2025.</li>
+          <li>Lee, G. et al. "Low-Power Circuit for Backscatter Communication." <i>IEEE Sensors</i>, 2024.</li>
+        </ul>
 
-    .links a {
-      display: inline-block;
-      margin-right: 12px;
-      text-decoration: none;
-      color: #444;
-      border-bottom: 1px solid #bbb;
-      transition: all 0.2s;
-    }
+        <h2>💡 Intellectual Properties</h2>
+        <ul>
+          <li>KR 10-2024-123456: Passive ISAC Tag Using Frequency-Modulated LoRa</li>
+          <li>KR 10-2023-789012: Low-Power Square Wave Generator</li>
+        </ul>
 
-    .links a:hover {
-      color: #000;
-      border-bottom: 2px solid #0066ff;
-    }
+        <h2>🔬 Research Projects</h2>
+        <ul>
+          <li>LoRa-Compatible Backscatter Tag for Smart Infrastructure (2024–)</li>
+          <li>Frequency Shift Keying with Passive RF Switch Networks (2023)</li>
+        </ul>
 
-    @media (max-width: 600px) {
-      body {
-        padding: 20px 15px;
-      }
+        <h2>🧑‍🏫 Tutorials</h2>
+        <ul>
+          <li><a href="https://yourblog.com/lora-tutorial" target="_blank">LoRa Basics for Engineers</a></li>
+          <li><a href="https://yourblog.com/backscatter-guide" target="_blank">Backscatter Tag Prototyping with STM32</a></li>
+        </ul>
 
-      h1 {
-        font-size: 2.2rem;
-      }
+      </section>
 
-      h2 {
-        font-size: 1.2rem;
-      }
-    }
-  </style>
-</head>
-<body>
-
-  <h1>Geonhee Lee</h1>
-  <p>📍 KAIST / Electrical Engineering</p>
-  <p>📫 <a href="mailto:your@email.com">your@email.com</a></p>
-
-  <h2>🎓 Education</h2>
-  <ul>
-    <li>Ph.D. in Electrical Engineering, KAIST (2023–present)</li>
-    <li>B.S. in Electrical Engineering, KAIST (2018–2022)</li>
-  </ul>
-
-  <h2>📚 Publications</h2>
-  <ul>
-    <li>Lee, G., et al. "LoRa-Backscatter Modulation for ISAC Applications." <i>IEEE ICC</i>, 2025.</li>
-    <li>Lee, G., et al. "Ultra-Low-Power Circuit for Backscatter Tag Design." <i>IEEE Sensors</i>, 2024.</li>
-    <!-- 추가 가능 -->
-  </ul>
-
-  <h2>💡 Intellectual Properties</h2>
-  <ul>
-    <li>KR 10-2024-123456: Passive ISAC Tag using Frequency-Modulated LoRa</li>
-    <li>KR 10-2023-789012: Square Wave Generator for Ultra Low-Power Modulation</li>
-  </ul>
-
-  <h2>🔬 Research Projects</h2>
-  <ul>
-    <li>LoRa-Compatible Backscatter Tag for Smart Infrastructure (2024–)</li>
-    <li>Frequency Shift Keying with Passive RF Switch Networks (2023)</li>
-  </ul>
-
-  <h2>🧑‍🏫 Tutorials</h2>
-  <ul>
-    <li><a href="https://yourblog.com/lora-tutorial" target="_blank">LoRa Basics for Engineers</a></li>
-    <li><a href="https://yourblog.com/backscatter-guide" target="_blank">Backscatter Tag Prototyping with STM32</a></li>
-  </ul>
-
-  <h2>🔗 Links</h2>
-  <div class="links">
-    <a href="https://github.com/coaccac" target="_blank">GitHub</a>
-    <a href="https://scholar.google.com/" target="_blank">Google Scholar</a>
-    <a href="https://yourblog.com" target="_blank">Blog</a>
-  </div>
-
-</body>
+      <footer>
+        <p>This page is maintained by <a href="https://github.com/coaccac">Geonhee Lee</a></p>
+        <p><small>Hosted on GitHub Pages using the <a href="https://github.com/orderedlist/minimal">Minimal</a> theme.</small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+  </body>
 </html>
