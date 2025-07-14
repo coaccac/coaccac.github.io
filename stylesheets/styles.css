@@ -194,8 +194,8 @@ footer {
   -webkit-font-smoothing:subpixel-antialiased;
 }
 
+/* --- Media Queries --- */
 @media print, screen and (max-width: 960px) {
-
   div.wrapper {
     width:auto;
     margin:0;
@@ -267,4 +267,21 @@ footer {
     font-size:12pt;
     color:#444;
   }
+}
+
+/* --- Custom figure toggle button (styled like link) --- */
+.figure-toggle-btn {
+  font-size: 13px;
+  color: #39c;
+  background: none;
+  border: none;
+  padding: 0;
+  margin-left: 10px;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.figure-toggle-btn:hover {
+  color: #069;
+  text-decoration: underline;
 }
