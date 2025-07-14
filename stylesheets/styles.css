@@ -271,7 +271,7 @@ footer {
 
 /* --- Custom figure toggle button (styled like link) --- */
 .figure-toggle-btn {
-  font-size: 13px;
+  font-size: 15px;
   color: #39c;
   background: none;
   border: none;
@@ -283,5 +283,4 @@ footer {
 
 .figure-toggle-btn:hover {
   color: #069;
-  text-decoration: underline;
 }
