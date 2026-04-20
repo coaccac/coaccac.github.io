@@ -195,8 +195,12 @@ p:last-child { margin-bottom: 0; }
   opacity: 1;
   transform: none;
 }
+/* Mobile / touch: no auto-open, use .is-open class from JS tap */
 @media (hover: none) {
-  .pubs .pub-fig { max-height: 600px; opacity: 1; transform: none; }
+  .pubs li:hover .pub-fig,
+  .pubs li:focus-within .pub-fig { max-height: 0; opacity: 0; transform: translateY(-4px); margin-top: 14px; }
+  .pubs li.is-open .pub-fig { max-height: 600px; opacity: 1; transform: translateY(0); margin-top: 14px; }
+  .pubs li { cursor: pointer; }
 }
 .pubs .title { font-weight: 600; color: var(--ink); }
 .pubs .authors { color: var(--ink-2); font-size: 15.5px; margin-top: 3px; }
@@ -384,7 +388,7 @@ window.__TWEAKS = /*EDITMODE-BEGIN*/{
   "theme": "light",
   "accent_hue": 25,
   "type_style": "serif",
-  "width": "wide"
+  "width": "default"
 }/*EDITMODE-END*/;
 </script>
 
@@ -437,7 +441,7 @@ window.__TWEAKS = /*EDITMODE-BEGIN*/{
       &nbsp;·&nbsp;
       <a href="https://scholar.google.com/citations?user=aA4R2SIAAAAJ" target="_blank" rel="noopener">Google Scholar</a>
       &nbsp;·&nbsp;
-      <span class="email-wrap" tabindex="0"><span class="email-trigger">email</span><span class="email-pop"><a href="/cdn-cgi/l/email-protection#aec9c6c2cbcbeec0cbdac2cfcc80ddc0db80cfcd80c5dc"><span class="__cf_email__" data-cfemail="02656a6e6767426c67766e63602c716c772c63612c6970">[email&#160;protected]</span></a><a href="/cdn-cgi/l/email-protection#3453515b5a744740555a525b46501a515041"><span class="__cf_email__" data-cfemail="e582808a8ba59691848b838a9781cb808190">[email&#160;protected]</span></a></span></span>
+      <span class="email-wrap" tabindex="0"><span class="email-trigger">email</span><span class="email-pop"><a href="/cdn-cgi/l/email-protection#8deae5e1e8e8cde3e8f9e1ecefa3fee3f8a3eceea3e6ff"><span class="__cf_email__" data-cfemail="bcdbd4d0d9d9fcd2d9c8d0ddde92cfd2c992dddf92d7ce">[email&#160;protected]</span></a><a href="/cdn-cgi/l/email-protection#6403010b0a241710050a020b16004a010011"><span class="__cf_email__" data-cfemail="f493919b9ab48780959a929b8690da919081">[email&#160;protected]</span></a></span></span>
     </p>
   </section>
 
@@ -667,6 +671,19 @@ try {
 } catch(e) {}
 
 applyState();
+
+/* Tap-to-toggle figure on touch devices only */
+if (matchMedia('(hover: none)').matches) {
+  document.querySelectorAll('.pubs > ul > li').forEach(li => {
+    li.addEventListener('click', (e) => {
+      // don't intercept clicks on links
+      if (e.target.closest('a')) return;
+      // close others
+      document.querySelectorAll('.pubs > ul > li.is-open').forEach(o => { if (o !== li) o.classList.remove('is-open'); });
+      li.classList.toggle('is-open');
+    });
+  });
+}
 </script>
 </body>
 </html>
