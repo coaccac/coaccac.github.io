@@ -1,182 +1,671 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="chrome=1">
-  <title>Geonhee Lee</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Geonhee Lee</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Newsreader:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --accent-h: 25;
+  --accent: oklch(0.55 0.14 var(--accent-h));
+  --accent-soft: oklch(0.55 0.14 var(--accent-h) / 0.12);
 
-  <link rel="stylesheet" href="stylesheets/styles.css">
-  <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-  <meta name="viewport" content="width=device-width">
-  <style>
-    body {
-      font-size: 15px;
-    }
-    .profile-name {
-      font-size: 1.8em;
-      font-weight: bold;
-      margin-bottom: 0.2em;
-    }
-    .profile-info {
-      margin-bottom: 1.5em;
-    }
-    .wrapper {
-      max-width: 1600px;
-      margin: 0 auto;
-      padding: 20px;
-    }
-    .inline-btn {
-      all: unset;                    
-      font-size: 15px;               
-      color: #39c;
-      cursor: pointer;
-      display: inline;
-      transition: color 0.3s ease;
-    }
-    .inline-btn:hover {
-      color: #069;
-    }
-    .inline-btn:focus {
-      outline: none;
-    }
-    .publication-image {
-      max-width: 100%;
-      height: auto;
-      margin-top: 10px;
-      display: none;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-    .publication-image.show {
-      display: block;
-      opacity: 1;
-    }
-  </style>
+  --paper: oklch(0.985 0.008 85);
+  --paper-2: oklch(0.96 0.01 85);
+  --ink: oklch(0.22 0.015 50);
+  --ink-2: oklch(0.42 0.015 50);
+  --ink-3: oklch(0.62 0.015 50);
+  --rule: oklch(0.85 0.012 85);
+
+  --serif: 'Newsreader', Georgia, 'Times New Roman', serif;
+  --display: 'Fraunces', Georgia, serif;
+}
+[data-theme="dark"] {
+  --paper: oklch(0.18 0.01 50);
+  --paper-2: oklch(0.22 0.01 50);
+  --ink: oklch(0.94 0.008 85);
+  --ink-2: oklch(0.78 0.01 85);
+  --ink-3: oklch(0.60 0.01 85);
+  --rule: oklch(0.32 0.015 50);
+  --accent: oklch(0.78 0.13 var(--accent-h));
+  --accent-soft: oklch(0.78 0.13 var(--accent-h) / 0.15);
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--serif);
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 18px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  transition: background 0.25s, color 0.25s;
+}
+::selection { background: var(--accent-soft); }
+a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--ink-3); text-decoration-thickness: 1px; text-underline-offset: 3px; transition: text-decoration-color 0.15s, color 0.15s; }
+a:hover { text-decoration-color: var(--accent); color: var(--accent); }
+
+.page {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 48px 28px 96px;
+}
+
+/* ---------- Top bar (tiny, unobtrusive) ---------- */
+.top {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 64px;
+  font-size: 15px;
+  color: var(--ink-3);
+  font-style: italic;
+}
+.top .tools { display: flex; gap: 14px; align-items: center; }
+.theme-btn {
+  background: none; border: none; cursor: pointer;
+  color: var(--ink-3); font-family: inherit; font-size: 17px;
+  padding: 2px 6px; border-radius: 3px;
+}
+.theme-btn:hover { color: var(--ink); background: var(--paper-2); }
+
+/* ---------- Tabs ---------- */
+.tabs {
+  display: flex; gap: 4px;
+  margin-bottom: 40px;
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 0;
+}
+.tab {
+  background: none; border: none; cursor: pointer;
+  font-family: inherit; font-size: 16px;
+  color: var(--ink-3);
+  padding: 8px 14px 10px;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  font-style: italic;
+  transition: color 0.15s, border-color 0.15s;
+}
+.tab:hover { color: var(--ink-2); }
+.tab.active {
+  color: var(--ink);
+  border-bottom-color: var(--accent);
+  font-style: normal;
+  font-weight: 500;
+}
+.tab-panel { display: none; }
+.tab-panel.active { display: block; animation: fadeIn 0.25s ease; }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: none; }
+}
+/* First section inside a tab shouldn't have extra top margin */
+.tab-panel > section:first-child { margin-top: 0; }
+.tab-panel > .hero { margin-bottom: 44px; }
+[data-type="sans"] .tab { font-style: normal; }
+
+/* ---------- Hero ---------- */
+.hero { display: flex; gap: 28px; align-items: flex-start; margin-bottom: 44px; }
+.hero .portrait {
+  flex-shrink: 0;
+  width: 110px; height: 110px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: var(--paper-2);
+  border: 1px solid var(--rule);
+}
+.hero .portrait img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.hero h1 {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: 44px;
+  line-height: 1.05;
+  letter-spacing: -0.015em;
+  margin: 0 0 6px;
+  font-variation-settings: "opsz" 96;
+}
+.hero .sub {
+  font-size: 17px;
+  color: var(--ink-2);
+  line-height: 1.5;
+  font-style: italic;
+}
+.hero .sub .here { color: var(--accent); font-style: normal; }
+
+/* ---------- Prose sections ---------- */
+section { margin-top: 56px; }
+h2 {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: 26px;
+  letter-spacing: -0.01em;
+  margin: 0 0 18px;
+  font-variation-settings: "opsz" 24;
+}
+h2 .amp { color: var(--accent); font-style: italic; font-weight: 400; }
+
+p { margin: 0 0 1em; }
+p:last-child { margin-bottom: 0; }
+
+.intro p { font-size: 18.5px; line-height: 1.65; color: var(--ink); }
+.intro p em { color: var(--accent); font-style: italic; }
+
+/* ---------- News (tiny list) ---------- */
+.news { list-style: none; padding: 0; margin: 0; }
+.news li {
+  display: flex; gap: 18px;
+  padding: 10px 0;
+  border-bottom: 1px dotted var(--rule);
+  align-items: baseline;
+}
+.news li:last-child { border-bottom: none; }
+.news .when {
+  flex-shrink: 0;
+  width: 86px;
+  color: var(--ink-3);
+  font-size: 14px;
+  font-style: italic;
+}
+.news .what { color: var(--ink); font-size: 16px; line-height: 1.5; }
+.news .what strong { font-weight: 600; }
+
+/* ---------- Publications: plain list ---------- */
+.pubs { list-style: none; padding: 0; margin: 0; }
+.pubs li { margin-bottom: 24px; }
+.pubs .pub-body { min-width: 0; }
+.pubs .pub-fig {
+  margin-top: 14px;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: max-height 0.42s ease, opacity 0.34s ease 0.06s, transform 0.34s ease 0.06s, margin-top 0.42s ease;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  background: var(--paper);
+}
+.pubs .pub-fig img { width: 100%; max-width: 560px; height: auto; display: block; border: 1px solid var(--rule); border-radius: 4px; }
+.pubs li:hover .pub-fig,
+.pubs li:focus-within .pub-fig {
+  max-height: 600px;
+  opacity: 1;
+  transform: none;
+}
+@media (hover: none) {
+  .pubs .pub-fig { max-height: 600px; opacity: 1; transform: none; }
+}
+.pubs .title { font-weight: 600; color: var(--ink); }
+.pubs .authors { color: var(--ink-2); font-size: 15.5px; margin-top: 3px; }
+.pubs .authors .me { color: var(--ink); font-weight: 600; font-style: italic; }
+.pubs .venue {
+  color: var(--ink-3); font-size: 15px; font-style: italic;
+  margin-top: 2px;
+}
+.pubs .venue .badge {
+  color: var(--accent); font-style: normal; margin-left: 6px;
+  font-size: 13.5px;
+}
+.pubs .links { font-size: 14.5px; margin-top: 4px; color: var(--ink-3); font-style: italic; }
+.pubs .links a { color: var(--ink-2); text-decoration-color: var(--rule); font-style: normal; }
+.pubs .links a:hover { color: var(--accent); }
+
+/* ---------- Small plain list (teaching, patents, edu) ---------- */
+.plain { list-style: none; padding: 0; margin: 0; }
+.plain li {
+  display: flex; gap: 16px; padding: 7px 0;
+  font-size: 16px; color: var(--ink-2);
+  align-items: baseline;
+}
+.plain .left {
+  flex-shrink: 0;
+  width: 100px;
+  color: var(--ink-3);
+  font-size: 14px;
+  font-style: italic;
+}
+.plain .main { color: var(--ink); }
+.plain .main .me { font-weight: 600; font-style: italic; color: var(--ink); }
+.plain .main .code { color: var(--ink-3); font-size: 13.5px; font-style: italic; margin-left: 4px; }
+
+/* ---------- Inline research interests ---------- */
+.interests { color: var(--ink); font-size: 17.5px; }
+.interests em { color: var(--accent); font-style: italic; font-weight: 500; }
+
+/* ---------- Footer ---------- */
+footer {
+  margin-top: 80px;
+  padding-top: 24px;
+  border-top: 1px solid var(--rule);
+  color: var(--ink-3);
+  font-size: 14px;
+  font-style: italic;
+  text-align: center;
+  line-height: 1.7;
+}
+footer a { color: var(--ink-2); }
+
+/* ---------- Tweaks panel (small, tucked away) ---------- */
+.tweaks {
+  position: fixed; right: 18px; bottom: 18px;
+  width: 240px;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  box-shadow: 0 6px 20px oklch(0 0 0 / 0.08);
+  z-index: 50;
+  font-family: var(--serif);
+  font-size: 13px;
+  overflow: hidden;
+}
+.tweaks.hidden { display: none; }
+.tweaks-head {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--rule);
+  font-style: italic; color: var(--ink-3);
+}
+.tweaks-head .close {
+  cursor: pointer; border: none; background: none;
+  color: var(--ink-3); font-size: 16px;
+  font-family: inherit;
+}
+.tweaks-body { padding: 12px; display: flex; flex-direction: column; gap: 12px; }
+.tweak-group .label { color: var(--ink-3); font-style: italic; font-size: 12px; display: block; margin-bottom: 5px; }
+.tweak-opts { display: flex; gap: 4px; flex-wrap: wrap; }
+.tweak-opt {
+  flex: 1 1 auto;
+  padding: 5px 8px;
+  border: 1px solid var(--rule);
+  background: transparent;
+  color: var(--ink-2);
+  font-family: var(--serif); font-size: 12.5px;
+  cursor: pointer; border-radius: 3px;
+  text-align: center;
+}
+.tweak-opt.active { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.hue-row { display: flex; gap: 6px; }
+.hue-swatch {
+  width: 22px; height: 22px; border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+}
+.hue-swatch.active { border-color: var(--ink); }
+
+/* ---------- Type variant: sans ---------- */
+[data-type="sans"] body,
+[data-type="sans"] { }
+[data-type="sans"] body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+}
+[data-type="sans"] h1, [data-type="sans"] h2 {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+[data-type="sans"] .hero .sub,
+[data-type="sans"] .top,
+[data-type="sans"] .news .when,
+[data-type="sans"] .plain .left,
+[data-type="sans"] .pubs .venue,
+[data-type="sans"] .pubs .links,
+[data-type="sans"] footer { font-style: normal; }
+
+[data-type="mixed"] body { font-family: -apple-system, BlinkMacSystemFont, system-ui, sans-serif; font-size: 17px; }
+[data-type="mixed"] h1, [data-type="mixed"] h2 { font-family: var(--display); }
+
+/* ---------- Width variants ---------- */
+[data-width="narrow"] .page { max-width: 580px; }
+[data-width="wide"] .page { max-width: 780px; }
+
+/* ---------- Mobile ---------- */
+@media (max-width: 560px) {
+  .page { padding: 28px 20px 64px; }
+  .hero { flex-direction: column; gap: 16px; }
+  .hero .portrait { width: 84px; height: 84px; }
+  .hero h1 { font-size: 36px; }
+  .news li, .plain li { flex-direction: column; gap: 2px; }
+  .news .when, .plain .left { width: auto; }
+  .tweaks { right: 10px; bottom: 10px; width: calc(100vw - 20px); max-width: 280px; }
+}
+
+/* Email hover popover */
+.email-wrap {
+  position: relative;
+  display: inline-block;
+}
+.email-wrap > .email-trigger {
+  cursor: pointer;
+  border-bottom: 1px dotted currentColor;
+}
+.email-pop {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translate(-50%, -4px);
+  margin-top: 6px;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  padding: 8px 12px;
+  white-space: nowrap;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.22s ease, transform 0.22s ease;
+  z-index: 5;
+  font-size: 15px;
+}
+/* invisible bridge so mouse can travel from trigger to popover */
+.email-pop::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -10px;
+  height: 10px;
+}
+.email-pop a { display: block; padding: 3px 0; }
+.email-wrap:hover .email-pop,
+.email-wrap:focus-within .email-pop {
+  opacity: 1;
+  transform: translate(-50%, 0);
+  pointer-events: auto;
+}
+</style>
 </head>
 <body>
-  <div class="wrapper">
-    <header>
-      <img src="ghlee.jpg" alt="Profile Photo" style="width:280.0px; height:auto; margin-bottom: 10px;">
-      <h1>Geonhee Lee</h1>
-      <p>Ph.D. Student @ <a href="https://sites.google.com/netlab.snu.ac.kr/netlabhome" target="_blank">NETLAB</a></p>
-      <p>Seoul, South Korea</p>
-      <p>I'm a third-year Ph.D. student in the Department of Electrical and Computer Engineering at Seoul National University, advised by Prof. <a href="https://sites.google.com/netlab.snu.ac.kr/netlabhome/people/faculty" target="_blank">Saewoong Bahk</a>.</p>
-      <p><a href="https://scholar.google.com/citations?user=aA4R2SIAAAAJ&hl=ko&oi=sra" target="_blank">Visit my Google Scholar</a></p>
-      <p><a href="CV.pdf" target="_blank">View CV (PDF)</a></p>
-    </header>
 
-    <section>
-      <h2>Education</h2>
-      <ul>
-        <li>Integrated M.S./Ph.D. Program in NETLAB, Seoul National University (2021–Present)</li>
-        <li>B.S. in Electrical and Electronic Engineering, Yonsei University (2017–2021)</li>
-        <li>Hansung Science High School (2014–2017)</li>
-        <li>Visiting Scholar in S4 Lab, Stanford University (2026)</li>
-      </ul>
+<script>
+window.__TWEAKS = /*EDITMODE-BEGIN*/{
+  "theme": "light",
+  "accent_hue": 25,
+  "type_style": "serif",
+  "width": "wide"
+}/*EDITMODE-END*/;
+</script>
 
-      <h2>Research Interest</h2>
-      <ul>
-        <li>Wireless Sensor Network</li>
-        <li>Low-power wide-area network (LPWAN)</li>
-        <li>Sensing-oriented applications in low-power networks</li>
-      </ul>
-
-      <h2>Selected Publications</h2>
-      <ul>
-        <li>
-          <strong>BIC-LoRa: Bits in Chirp Shapes to Boost Throughput in LoRa</strong>
-          <a href="https://drive.google.com/file/d/1s80VwRy_NmhiofiA_F94wwNF7fUanRVe/view?usp=sharing" target="_blank">[PDF]</a>
-          <a href="https://docs.google.com/presentation/d/1GtDmCVG-qd-tTn24YZMZyJu0qLlcK0La/edit?usp=sharing" target="_blank">[Slides]</a>
-          <button class="inline-btn" onclick="toggleImage('bicImage', this)">[Figure]</button><br>
-          <em><strong>Geonhee Lee</strong>, Eunjeong Park, Mingyu Park, Jeongyeop Paek, and Saewoong Bahk</em><br>
-          <em>ACM/IEEE International Conference on Information Processing in Sensor Networks (IPSN)</em>, 2024.<br>
-          <img id="bicImage" src="BIC.jpg" alt="BIC-LoRa figure" class="publication-image">
-        </li>
-
-        
-        <li>
-          <strong>Cupid: Fast and Reliable Convergecast-over-UWB Protocol for Dense Internet of Things [Best Paper Runner-up]</strong>
-          <a href="https://drive.google.com/file/d/1BMN6ZRgQ7noF3KETLTbfRB0l7DIlARTa/view?usp=sharing" target="_blank">[PDF]</a>
-          <button class="inline-btn" onclick="toggleImage('cupidImage', this)">[Figure]</button><br>
-          <em>Jimin Park, <strong>Geonhee Lee</strong>, Jeongyeop Paek, and Saewoong Bahk</em><br>
-          <em>IEEE 21st Annual International Conference on Distributed Computing in Smart Systems and the Internet of Things (DCOSS-IoT)</em>, 2025.<br>
-          <img id="cupidImage" src="CUPID.jpg" alt="Cupid figure" class="publication-image">
-        </li>
-
-        
-        <li>
-          <strong>Slot-Size Adaptation and Utility-Based Packet Aggregation for IEEE 802.15.4e Time-Slotted Communication Networks</strong>
-          <a href="https://drive.google.com/file/d/1Q9Me7vjUherOuqJJhdHV8Abcl-6nLNif/view?usp=sharing" target="_blank">[PDF]</a>
-          <button class="inline-btn" onclick="toggleImage('asapImage', this)">[Figure]</button><br>
-          <em>Hongchan Kim, <strong>Geonhee Lee</strong>, Juhun Shin, Jeongyeop Paek, and Saewoong Bahk</em><br>
-          <em>IEEE Internet of Things Journal</em>, vol. 11, no. 9, pp. 16382–16397, 2024.<br>
-          <img id="asapImage" src="ASAP.jpg" alt="ASAP figure" class="publication-image">
-        </li>
-
-        
-        <li>
-          <strong>Quick6TiSCH: Accelerating Formation of 6TiSCH Networks with TSCH and RPL</strong>
-          <a href="https://drive.google.com/file/d/17j1F_p_WApDhPvnQAfL1Ya4C4l5sagAo/view?usp=sharing" target="_blank">[PDF]</a>
-          <button class="inline-btn" onclick="toggleImage('quickImage', this)">[Figure]</button><br>
-          <em>Hongchan Kim, <strong>Geonhee Lee</strong>, Juhun Shin, Jeongyeop Paek, and Saewoong Bahk</em><br>
-          <em>IEEE 21st International Conference on Mobile Ad-Hoc and Smart Systems (MASS)</em>, 2024.<br>
-          <img id="quickImage" src="QUICK.jpg" alt="Quick6TiSCH figure" class="publication-image">
-        </li>
-      </ul>
-
-      <h2>Awards and Honors</h2>
-      <ul>
-        <li>Student Travel Grant, ACM/IEEE IPSN 2024</li>
-      </ul>
-
-      <h2>Intellectual Properties</h2>
-      <ul>
-        <li>
-          KR 10-2025-0057644: LoRa communication device and the modulation and demodulation methods used by the communication device<br>
-          <em><strong>Geonhee Lee</strong>, Eunjeong Park, Saewoong Bahk</em><br>
-        </li>
-        <li>
-          KR 10-2025-0057659: Method for collecting data using concurrent transmission in ultra-wideband based multi-hop wireless networks<br>
-          <em>Jimin Park, <strong>Geonhee Lee</strong>, Saewoong Bahk</em><br>
-        </li>
-      </ul>
-
-      <h2>Lectures</h2>
-      <ul>
-        <li>“Advanced Mobile Communication Systems” at SNU, Summer. 2025.</li>
-        <li>“Advanced Mobile Communication Systems” at SNU, Summer. 2024.</li>
-        <li>“Creative Engineering Design” at SNU, Fall. 2024.</li>
-        <li>“Creative Engineering Design” at SNU, Fall. 2023.</li>
-        <li>“Engineering Mathematics” at SNU, Fall. 2022.</li>
-      </ul>
-    </section>
-
-    <footer>
-      <p><small>Hosted on GitHub Pages using the <a href="https://github.com/orderedlist/minimal">Minimal</a> theme.</small></p>
-      <a href="https://www.hitwebcounter.com" target="_blank">
-          <img src="https://hitwebcounter.com/counter/counter.php?page=21173660&style=0007&nbdigits=5&type=ip&initCount=0" title="Counter Widget" Alt="Visit counter For Websites"   border="0" />
-      </a>            
-    </footer>
+<div class="page">
+  <div class="top">
+    <span>Geonhee Lee · <a href="https://sites.google.com/netlab.snu.ac.kr/netlabhome" target="_blank" rel="noopener" style="color:inherit">NETLAB, SNU</a></span>
+    <div class="tools">
+      <button class="theme-btn" id="themeToggle" title="toggle theme">◐</button>
+      <button class="theme-btn" id="tweaksToggle" title="tweaks" style="display:none">⚙</button>
+    </div>
   </div>
 
-  <script src="javascripts/scale.fix.js"></script>
-  <script>
-    function toggleImage(id, btn) {
-      const img = document.getElementById(id);
-      if (img.classList.contains("show")) {
-        img.classList.remove("show");
-        setTimeout(() => {
-          img.style.display = "none";
-        }, 300);
-        btn.textContent = "[Figure]";
-      } else {
-        img.style.display = "block";
-        setTimeout(() => {
-          img.classList.add("show");
-        }, 10);
-        btn.textContent = "[Hide Figure]";
-      }
-    }
-  </script>
+  <!-- Tabs -->
+  <nav class="tabs" role="tablist">
+    <button class="tab active" data-tab="about">About</button>
+    <button class="tab" data-tab="publications">Publications</button>
+    <button class="tab" data-tab="others">Others</button>
+  </nav>
+
+  <!-- ============ ABOUT ============ -->
+  <div class="tab-panel active" data-panel="about">
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="portrait"><img src="assets/ghlee.jpg" alt="Geonhee Lee"/></div>
+    <div>
+      <h1>Geonhee Lee</h1>
+      <p class="sub">
+        Ph.D. student in wireless networks at Seoul National University.
+      </p>
+    </div>
+  </div>
+
+  <!-- Intro / about -->
+  <section class="intro">
+    <p>
+      I work on the lower layers of wireless networks — mostly LoRa, UWB, and
+      802.15.4 — at <a href="https://sites.google.com/netlab.snu.ac.kr/netlabhome" target="_blank" rel="noopener">NETLAB</a>
+      under <a href="https://sites.google.com/netlab.snu.ac.kr/netlabhome/people/faculty" target="_blank" rel="noopener">Prof. Saewoong Bahk</a>.
+      I work on PHY and MAC design for low-power radios &mdash; things like
+      throughput, reliability, and reach for LoRa, UWB, and 802.15.4e (Zigbee).
+    </p>
+    <p>
+      Before SNU I studied EE at Yonsei. For spring&ndash;summer 2026 I'm a visiting scholar
+      at Stanford's <a href="https://s4lab.stanford.edu/" target="_blank" rel="noopener">S4 Lab</a>,
+      working with <a href="https://www.zerinakapetanovic.com/" target="_blank" rel="noopener">Prof. Zerina Kapetanovic</a>.
+    </p>
+    <p style="margin-top: 1.4em; color: var(--ink-2); font-size: 16px;">
+      <a href="https://coaccac.github.io/CV.pdf" target="_blank" rel="noopener">CV</a>
+      &nbsp;·&nbsp;
+      <a href="https://scholar.google.com/citations?user=aA4R2SIAAAAJ" target="_blank" rel="noopener">Google Scholar</a>
+      &nbsp;·&nbsp;
+      <span class="email-wrap" tabindex="0"><span class="email-trigger">email</span><span class="email-pop"><a href="/cdn-cgi/l/email-protection#c7a0afaba2a287a9a2b3aba6a5e9b4a9b2e9a6a4e9acb5"><span class="__cf_email__" data-cfemail="16717e7a7373567873627a777438657863387775387d64">[email&#160;protected]</span></a><a href="/cdn-cgi/l/email-protection#e186848e8fa19295808f878e9385cf848594"><span class="__cf_email__" data-cfemail="dabdbfb5b49aa9aebbb4bcb5a8bef4bfbeaf">[email&#160;protected]</span></a></span></span>
+    </p>
+  </section>
+
+  <!-- Research interests (inline, prose) -->
+  <section>
+    <h2>What I work on</h2>
+    <p class="interests">
+      <em>LoRa</em>, <em>UWB</em>, and <em>Zigbee (802.15.4e)</em>. Currently exploring
+      LoRa backscatter and thermal-noise-based communication.
+    </p>
+  </section>
+
+  <!-- News -->
+  <section>
+    <h2>News</h2>
+    <ul class="news">
+      <li><span class="when">Mar 2026</span><span class="what">Joined <a href="https://s4lab.stanford.edu/" target="_blank" rel="noopener"><strong>Stanford S4 Lab</strong></a> as a visiting scholar.</span></li>
+      <li><span class="when">Jun 2025</span><span class="what">Cupid got the <strong>Best Paper Runner-up</strong> at DCOSS-IoT 2025.</span></li>
+      <li><span class="when">Sep 2024</span><span class="what">Presented <strong>Quick6TiSCH</strong> at IEEE MASS 2024.</span></li>
+      <li><span class="when">May 2024</span><span class="what">Presented <strong>BIC-LoRa</strong> at ACM/IEEE IPSN 2024 &mdash; also got a travel grant.</span></li>
+      <li><span class="when">Jan 2024</span><span class="what"><strong>ASAP</strong> (slot-size adaptation for 802.15.4e) published in <strong>IEEE Internet of Things Journal</strong>.</span></li>
+    </ul>
+  </section>
+
+  </div><!-- /about -->
+
+  <!-- ============ PUBLICATIONS ============ -->
+  <div class="tab-panel" data-panel="publications">
+
+  <!-- Publications -->
+  <section style="margin-top:0">
+    <h2>Papers</h2>
+    <ul class="pubs">
+      <li>
+        <div class="pub-body">
+          <div class="title">BIC-LoRa: Bits in Chirp Shapes to Boost Throughput in LoRa</div>
+          <div class="authors"><span class="me">Geonhee Lee</span>, Eunjeong Park, Mingyu Park, Jeongyeop Paek, Saewoong Bahk</div>
+          <div class="venue">ACM/IEEE IPSN 2024</div>
+          <div class="links">
+            <a href="https://drive.google.com/file/d/1s80VwRy_NmhiofiA_F94wwNF7fUanRVe/view?usp=sharing" target="_blank" rel="noopener">PDF</a>
+            &nbsp;·&nbsp;
+            <a href="https://docs.google.com/presentation/d/1GtDmCVG-qd-tTn24YZMZyJu0qLlcK0La/edit?usp=sharing" target="_blank" rel="noopener">Slides</a>
+          </div>
+        </div>
+        <div class="pub-fig"><img src="assets/BIC.jpg" alt="BIC-LoRa figure" loading="lazy"/></div>
+      </li>
+      <li>
+        <div class="pub-body">
+          <div class="title">Cupid: Fast and Reliable Convergecast-over-UWB Protocol for Dense Internet of Things</div>
+          <div class="authors">Jimin Park, <span class="me">Geonhee Lee</span>, Jeongyeop Paek, Saewoong Bahk</div>
+          <div class="venue">IEEE DCOSS-IoT 2025 <span class="badge">— Best Paper Runner-up</span></div>
+          <div class="links">
+            <a href="https://drive.google.com/file/d/1BMN6ZRgQ7noF3KETLTbfRB0l7DIlARTa/view?usp=sharing" target="_blank" rel="noopener">PDF</a>
+          </div>
+        </div>
+        <div class="pub-fig"><img src="assets/CUPID.jpg" alt="Cupid figure" loading="lazy"/></div>
+      </li>
+      <li>
+        <div class="pub-body">
+          <div class="title">Slot-Size Adaptation and Utility-Based Packet Aggregation for IEEE 802.15.4e Time-Slotted Communication Networks</div>
+          <div class="authors">Hongchan Kim, <span class="me">Geonhee Lee</span>, Juhun Shin, Jeongyeop Paek, Saewoong Bahk</div>
+          <div class="venue">IEEE Internet of Things Journal, 11(9), 2024</div>
+          <div class="links">
+            <a href="https://drive.google.com/file/d/1Q9Me7vjUherOuqJJhdHV8Abcl-6nLNif/view?usp=sharing" target="_blank" rel="noopener">PDF</a>
+          </div>
+        </div>
+        <div class="pub-fig"><img src="assets/ASAP.jpg" alt="ASAP figure" loading="lazy"/></div>
+      </li>
+      <li>
+        <div class="pub-body">
+          <div class="title">Quick6TiSCH: Accelerating Formation of 6TiSCH Networks with TSCH and RPL</div>
+          <div class="authors">Hongchan Kim, <span class="me">Geonhee Lee</span>, Juhun Shin, Jeongyeop Paek, Saewoong Bahk</div>
+          <div class="venue">IEEE MASS 2024</div>
+          <div class="links">
+            <a href="https://drive.google.com/file/d/17j1F_p_WApDhPvnQAfL1Ya4C4l5sagAo/view?usp=sharing" target="_blank" rel="noopener">PDF</a>
+          </div>
+        </div>
+        <div class="pub-fig"><img src="assets/QUICK.jpg" alt="Quick6TiSCH figure" loading="lazy"/></div>
+      </li>
+    </ul>
+  </section>
+
+  </div><!-- /publications -->
+
+  <!-- ============ OTHERS ============ -->
+  <div class="tab-panel" data-panel="others">
+
+  <!-- Teaching -->
+  <section style="margin-top:0">
+    <h2>Teaching</h2>
+    <ul class="plain">
+      <li><span class="left">2025, Sum.</span><span class="main">Advanced Mobile Communication Systems <span class="code">TA · SNU</span></span></li>
+      <li><span class="left">2024, Sum.</span><span class="main">Advanced Mobile Communication Systems <span class="code">TA · SNU</span></span></li>
+      <li><span class="left">2024, Fall</span><span class="main">Creative Engineering Design <span class="code">TA · SNU</span></span></li>
+      <li><span class="left">2023, Fall</span><span class="main">Creative Engineering Design <span class="code">TA · SNU</span></span></li>
+      <li><span class="left">2022, Fall</span><span class="main">Engineering Mathematics <span class="code">TA · SNU</span></span></li>
+    </ul>
+  </section>
+
+  <!-- Elsewhere / education -->
+  <section>
+    <h2>Elsewhere</h2>
+    <ul class="plain">
+      <li><span class="left">2026</span><span class="main">Visiting Scholar, <a href="https://s4lab.stanford.edu/" target="_blank" rel="noopener">S4 Lab</a>, Stanford</span></li>
+      <li><span class="left">2021&ndash;</span><span class="main">Integrated M.S./Ph.D., <a href="https://sites.google.com/netlab.snu.ac.kr/netlabhome" target="_blank" rel="noopener">NETLAB</a>, Seoul National University</span></li>
+      <li><span class="left">2017&ndash;21</span><span class="main">B.S. EE, Yonsei University</span></li>
+    </ul>
+  </section>
+
+  <!-- Awards & honors -->
+  <section>
+    <h2>Awards &amp; honors</h2>
+    <ul class="plain">
+      <li><span class="left">2025</span><span class="main"><strong>Best Paper Runner-up</strong>, IEEE DCOSS-IoT 2025 <span class="code">(Cupid)</span></span></li>
+      <li><span class="left">2024</span><span class="main">Student Travel Grant, ACM/IEEE IPSN 2024</span></li>
+    </ul>
+  </section>
+
+  </div><!-- /others -->
+</div>
+
+<!-- Tweaks panel -->
+<div id="tweaksPanel" class="tweaks hidden">
+  <div class="tweaks-head">
+    <span>tweaks</span>
+    <button class="close" id="tweaksClose">×</button>
+  </div>
+  <div class="tweaks-body">
+    <div class="tweak-group">
+      <span class="label">theme</span>
+      <div class="tweak-opts" data-tweak="theme">
+        <button class="tweak-opt" data-value="light">light</button>
+        <button class="tweak-opt" data-value="dark">dark</button>
+      </div>
+    </div>
+    <div class="tweak-group">
+      <span class="label">accent</span>
+      <div class="hue-row" data-tweak="accent_hue">
+        <div class="hue-swatch" data-value="25" style="background:oklch(0.55 0.14 25)"></div>
+        <div class="hue-swatch" data-value="75" style="background:oklch(0.55 0.14 75)"></div>
+        <div class="hue-swatch" data-value="155" style="background:oklch(0.55 0.14 155)"></div>
+        <div class="hue-swatch" data-value="210" style="background:oklch(0.55 0.14 210)"></div>
+        <div class="hue-swatch" data-value="280" style="background:oklch(0.55 0.14 280)"></div>
+        <div class="hue-swatch" data-value="340" style="background:oklch(0.55 0.14 340)"></div>
+      </div>
+    </div>
+    <div class="tweak-group">
+      <span class="label">typography</span>
+      <div class="tweak-opts" data-tweak="type_style">
+        <button class="tweak-opt" data-value="serif">serif</button>
+        <button class="tweak-opt" data-value="mixed">mixed</button>
+        <button class="tweak-opt" data-value="sans">sans</button>
+      </div>
+    </div>
+    <div class="tweak-group">
+      <span class="label">width</span>
+      <div class="tweak-opts" data-tweak="width">
+        <button class="tweak-opt" data-value="narrow">narrow</button>
+        <button class="tweak-opt" data-value="default">default</button>
+        <button class="tweak-opt" data-value="wide">wide</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js" defer></script><script>
+const DEFAULTS = { theme: 'light', accent_hue: 25, type_style: 'serif', width: 'default' };
+let state = Object.assign({}, DEFAULTS, window.__TWEAKS || {});
+try {
+  const saved = JSON.parse(localStorage.getItem('ghlee_v2') || 'null');
+  if (saved) state = Object.assign(state, saved);
+} catch(e) {}
+
+function applyState() {
+  document.documentElement.setAttribute('data-theme', state.theme);
+  document.documentElement.setAttribute('data-type', state.type_style);
+  document.documentElement.setAttribute('data-width', state.width);
+  document.documentElement.style.setProperty('--accent-h', state.accent_hue);
+  document.querySelectorAll('.tweak-opt').forEach(b => {
+    const key = b.parentElement.getAttribute('data-tweak');
+    b.classList.toggle('active', String(state[key]) === b.getAttribute('data-value'));
+  });
+  document.querySelectorAll('.hue-swatch').forEach(b => {
+    b.classList.toggle('active', String(state.accent_hue) === b.getAttribute('data-value'));
+  });
+}
+
+function setTweak(key, value) {
+  if (key === 'accent_hue') value = Number(value);
+  state[key] = value;
+  try { localStorage.setItem('ghlee_v2', JSON.stringify(state)); } catch(e) {}
+  applyState();
+  try { window.parent.postMessage({ type: '__edit_mode_set_keys', edits: { [key]: value } }, '*'); } catch(e) {}
+}
+
+// edit mode protocol
+window.addEventListener('message', (e) => {
+  if (!e.data || typeof e.data !== 'object') return;
+  if (e.data.type === '__activate_edit_mode') {
+    document.getElementById('tweaksToggle').style.display = '';
+    document.getElementById('tweaksPanel').classList.remove('hidden');
+  } else if (e.data.type === '__deactivate_edit_mode') {
+    document.getElementById('tweaksToggle').style.display = 'none';
+    document.getElementById('tweaksPanel').classList.add('hidden');
+  }
+});
+try { window.parent.postMessage({ type: '__edit_mode_available' }, '*'); } catch(e) {}
+
+document.getElementById('themeToggle').addEventListener('click', () => setTweak('theme', state.theme === 'dark' ? 'light' : 'dark'));
+document.getElementById('tweaksToggle').addEventListener('click', () => document.getElementById('tweaksPanel').classList.toggle('hidden'));
+document.getElementById('tweaksClose').addEventListener('click', () => document.getElementById('tweaksPanel').classList.add('hidden'));
+document.querySelectorAll('.tweak-opt').forEach(b => b.addEventListener('click', () => setTweak(b.parentElement.getAttribute('data-tweak'), b.getAttribute('data-value'))));
+document.querySelectorAll('.hue-swatch').forEach(b => b.addEventListener('click', () => setTweak('accent_hue', b.getAttribute('data-value'))));
+
+// Tabs
+function setTab(name) {
+  document.querySelectorAll('.tab').forEach(b => b.classList.toggle('active', b.getAttribute('data-tab') === name));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.toggle('active', p.getAttribute('data-panel') === name));
+  try { localStorage.setItem('ghlee_v2_tab', name); } catch(e) {}
+  window.scrollTo({ top: 0, behavior: 'auto' });
+}
+document.querySelectorAll('.tab').forEach(b => b.addEventListener('click', () => setTab(b.getAttribute('data-tab'))));
+try {
+  const savedTab = localStorage.getItem('ghlee_v2_tab');
+  if (savedTab) setTab(savedTab);
+} catch(e) {}
+
+applyState();
+</script>
 </body>
 </html>
