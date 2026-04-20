@@ -195,12 +195,8 @@ p:last-child { margin-bottom: 0; }
   opacity: 1;
   transform: none;
 }
-/* Mobile / touch: no auto-open, use .is-open class from JS tap */
 @media (hover: none) {
-  .pubs li:hover .pub-fig,
-  .pubs li:focus-within .pub-fig { max-height: 0; opacity: 0; transform: translateY(-4px); margin-top: 14px; }
-  .pubs li.is-open .pub-fig { max-height: 600px; opacity: 1; transform: translateY(0); margin-top: 14px; }
-  .pubs li { cursor: pointer; }
+  .pubs .pub-fig { max-height: 600px; opacity: 1; transform: none; }
 }
 .pubs .title { font-weight: 600; color: var(--ink); }
 .pubs .authors { color: var(--ink-2); font-size: 15.5px; margin-top: 3px; }
@@ -441,7 +437,7 @@ window.__TWEAKS = /*EDITMODE-BEGIN*/{
       &nbsp;·&nbsp;
       <a href="https://scholar.google.com/citations?user=aA4R2SIAAAAJ" target="_blank" rel="noopener">Google Scholar</a>
       &nbsp;·&nbsp;
-      <span class="email-wrap" tabindex="0"><span class="email-trigger">email</span><span class="email-pop"><a href="/cdn-cgi/l/email-protection#8deae5e1e8e8cde3e8f9e1ecefa3fee3f8a3eceea3e6ff"><span class="__cf_email__" data-cfemail="bcdbd4d0d9d9fcd2d9c8d0ddde92cfd2c992dddf92d7ce">[email&#160;protected]</span></a><a href="/cdn-cgi/l/email-protection#6403010b0a241710050a020b16004a010011"><span class="__cf_email__" data-cfemail="f493919b9ab48780959a929b8690da919081">[email&#160;protected]</span></a></span></span>
+      <span class="email-wrap" tabindex="0"><span class="email-trigger">email</span><span class="email-pop"><a href="/cdn-cgi/l/email-protection#52353a3e3737123c37263e33307c213c277c33317c3920"><span class="__cf_email__" data-cfemail="63040b0f0606230d06170f02014d100d164d02004d0811">[email&#160;protected]</span></a><a href="/cdn-cgi/l/email-protection#2542404a4b655651444b434a57410b404150"><span class="__cf_email__" data-cfemail="c1a6a4aeaf81b2b5a0afa7aeb3a5efa4a5b4">[email&#160;protected]</span></a></span></span>
     </p>
   </section>
 
@@ -449,7 +445,7 @@ window.__TWEAKS = /*EDITMODE-BEGIN*/{
   <section>
     <h2>What I work on</h2>
     <p class="interests">
-      Currently exploring <em>LoRa backscatter</em> and <em>thermal-noise-based communication</em>.
+      Currently exploring <em>LoRa backscatter</em> and <em>Thermal noise communication</em>.
       Previously worked on PHY/MAC for <em>LoRa</em>, <em>UWB</em>, and <em>Zigbee (802.15.4e)</em> &mdash;
       and broadly interested in anything around low-power wireless.
     </p>
@@ -548,7 +544,8 @@ window.__TWEAKS = /*EDITMODE-BEGIN*/{
     <ul class="plain">
       <li><span class="left">2026</span><span class="main">Visiting Scholar, <a href="https://s4lab.stanford.edu/" target="_blank" rel="noopener">S4 Lab</a>, Stanford</span></li>
       <li><span class="left">2021&ndash;</span><span class="main">Integrated M.S./Ph.D., <a href="https://sites.google.com/netlab.snu.ac.kr/netlabhome" target="_blank" rel="noopener">NETLAB</a>, Seoul National University</span></li>
-      <li><span class="left">2017&ndash;21</span><span class="main">B.S. EE, Yonsei University</span></li>
+      <li><span class="left">2017&ndash;21</span><span class="main">B.S., Electrical and Electronic Engineering, Yonsei University</span></li>
+      <li><span class="left">2014&ndash;17</span><span class="main">Hansung Science High School</span></li>
     </ul>
   </section>
 
@@ -557,7 +554,7 @@ window.__TWEAKS = /*EDITMODE-BEGIN*/{
     <h2>Awards &amp; honors</h2>
     <ul class="plain">
       <li><span class="left">2025</span><span class="main"><strong>Best Paper Runner-up</strong>, IEEE DCOSS-IoT 2025 <span class="code">(Cupid)</span></span></li>
-      <li><span class="left">2024</span><span class="main">Student Travel Grant, ACM/IEEE IPSN 2024</span></li>
+      <li><span class="left">2024</span><span class="main"><strong>Student Travel Grant</strong>, ACM/IEEE IPSN 2024</span></li>
     </ul>
   </section>
 
@@ -671,19 +668,6 @@ try {
 } catch(e) {}
 
 applyState();
-
-/* Tap-to-toggle figure on touch devices only */
-if (matchMedia('(hover: none)').matches) {
-  document.querySelectorAll('.pubs > ul > li').forEach(li => {
-    li.addEventListener('click', (e) => {
-      // don't intercept clicks on links
-      if (e.target.closest('a')) return;
-      // close others
-      document.querySelectorAll('.pubs > ul > li.is-open').forEach(o => { if (o !== li) o.classList.remove('is-open'); });
-      li.classList.toggle('is-open');
-    });
-  });
-}
 </script>
 </body>
 </html>
