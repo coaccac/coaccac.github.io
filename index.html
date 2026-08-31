@@ -152,6 +152,7 @@ p:last-child { margin-bottom: 0; }
 .pubs .authors { color: var(--ink-2); font-size: 14px; margin-top: 3px; line-height: 1.5; }
 .pubs .authors .me { font-weight: 600; color: var(--ink); }
 .pubs .venue { color: var(--ink-3); font-size: 13.5px; margin-top: 2px; }
+.pubs .rate { color: var(--ink-4); font-size: 12.5px; }
 
 /* Figure reveal on hover */
 .pubs .pub-fig {
@@ -267,8 +268,8 @@ p:last-child { margin-bottom: 0; }
       <div class="side-item"><span class="muted">Spring–Summer 2026</span></div>
 
       <div class="side-h">Contact</div>
-      <div class="side-item"><a href="/cdn-cgi/l/email-protection#64030c080101424752505f0a0110080506424750525f170a11424750525f0507424750525f0f16">ghlee&#64;netlab&#46;snu&#46;ac&#46;kr</a></div>
-      <div class="side-item"><a href="/cdn-cgi/l/email-protection#4b2c2e24256d687d7f70383f2a252d24392f6d687f7d702e2f3e">geon&#64;stanford&#46;edu</a></div>
+      <div class="side-item"><a href="mailto:ghlee&#64;netlab&#46;snu&#46;ac&#46;kr">ghlee&#64;netlab&#46;snu&#46;ac&#46;kr</a></div>
+      <div class="side-item"><a href="mailto:geon&#64;stanford&#46;edu">geon&#64;stanford&#46;edu</a></div>
 
       <div class="side-h">Links</div>
       <div class="side-links">
@@ -286,7 +287,7 @@ p:last-child { margin-bottom: 0; }
         I am a Ph.D. student at <a href="https://sites.google.com/netlab.snu.ac.kr/netlabhome" target="_blank" rel="noopener">NETLAB</a>, Seoul National University, advised by Prof. <a href="https://sites.google.com/netlab.snu.ac.kr/netlabhome/people/faculty" target="_blank" rel="noopener">Saewoong Bahk</a>. My research addresses the design of physical and medium-access layers for low-power wireless networks, including LoRa, UWB, and IEEE 802.15.4e.
       </p>
       <p>
-        From spring through summer 2026, I am visiting Stanford's <a href="https://s4lab.stanford.edu/" target="_blank" rel="noopener">S4 Lab</a>, hosted by Prof. <a href="https://www.zerinakapetanovic.com/" target="_blank" rel="noopener">Zerina Kapetanovic</a>.
+        From spring through summer 2026, I am a visiting scholar at Stanford's <a href="https://s4lab.stanford.edu/" target="_blank" rel="noopener">S4 Lab</a>, hosted by Prof. <a href="https://www.zerinakapetanovic.com/" target="_blank" rel="noopener">Zerina Kapetanovic</a>.
       </p>
     </section>
 
@@ -300,7 +301,8 @@ p:last-child { margin-bottom: 0; }
     <section>
       <h2>News</h2>
       <ul class="news">
-        <li><span class="when">Mar 2026</span><span class="what">Joined Stanford S4 Lab as a visiting student researcher.</span></li>
+        <li><span class="when">Aug 2026</span><span class="what">CORAL got conditionally accepted to ACM SenSys 2027.</span></li>
+        <li><span class="when">Mar 2026</span><span class="what">Joined Stanford S4 Lab as a visiting scholar.</span></li>
         <li><span class="when">Jun 2025</span><span class="what">Cupid received the Best Paper Runner-up Award at IEEE DCOSS-IoT 2025.</span></li>
         <li><span class="when">Sep 2024</span><span class="what">Presented Quick6TiSCH at IEEE MASS 2024.</span></li>
         <li><span class="when">May 2024</span><span class="what">Presented BIC-LoRa at ACM/IEEE IPSN 2024; received a Student Travel Grant.</span></li>
@@ -313,11 +315,19 @@ p:last-child { margin-bottom: 0; }
       <ul class="pubs">
         <li>
           <div class="pub-head">
+            <div class="title">CORAL: Collision-Resilient Ambient LoRa Backscatter via Time-Frequency Permutation</div>
+            <div class="year">2027</div>
+          </div>
+          <div class="authors"><span class="me">Geonhee Lee</span>, Sungbo Eo, Yubin Choi, Jeongyeup Paek, Saewoong Bahk</div>
+          <div class="venue">ACM SenSys 2027 <span class="rate">(acceptance ratio: 17.7%, 43/243)</span></div>
+        </li>
+        <li>
+          <div class="pub-head">
             <div class="title">BIC-LoRa: Bits in Chirp Shapes to Boost Throughput in LoRa</div>
             <div class="year">2024</div>
           </div>
           <div class="authors"><span class="me">Geonhee Lee</span>, Eunjeong Park, Mingyu Park, Jeongyeop Paek, Saewoong Bahk</div>
-          <div class="venue">ACM/IEEE IPSN 2024</div>
+          <div class="venue">ACM/IEEE IPSN 2024 <span class="rate">(acceptance ratio: 21.5%, 20/93)</span></div>
           <div class="links">
             <a href="https://drive.google.com/file/d/1s80VwRy_NmhiofiA_F94wwNF7fUanRVe/view?usp=sharing" target="_blank" rel="noopener">PDF</a>
             &nbsp;·&nbsp;
@@ -403,7 +413,7 @@ p:last-child { margin-bottom: 0; }
   </main>
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
   const btn = document.getElementById('themeToggle');
   const saved = localStorage.getItem('ghlee_theme');
   if (saved === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
